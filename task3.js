@@ -1,22 +1,31 @@
-let express=require("express");
-let app=express();
-app.use(express.json());
+let express=require("express")
+let app=express()
+app.use(express.json())
+let port=129
 
-let locale=require("node-localstorage").LocalStorage;
-let storage=new locale("data");
+let local=require("node-localstorage").LocalStorage
+// //console.log(local);
+// let st=local.LocalStorage
+// //console.log(st);
+let storage=new local("data")
 
 app.post("/login",(req,res)=>{
-    let getting=JSON.parse(storage.getItem("data"));
-    console.log(getting);
-    getting.filter((val)=>{
-        if(val["FirstName"]==req.body.FirstName && val["LastName"]==req.body.LastName){
-            res.send("user existed")
-        }
-        else{
-            res.send("user not existed!!")
-        }
+    let data=JSON.parse(storage.getItem("data"))
+    console.log(data)
+    // res.send(data)
+    var count=0
+    data.filter((val,ind)=>{ 
+        if(val["username"]==req.body.username && val['GMail']==req.body.GMail && val['password']==req.body.password){
+            count++   
+        }  
     })
+    if(count>0){
+        res.send(`user exist ${count} times`)
+    }
+    else{
+        res.send("user not existed")
+    }
 })
-app.listen(196,()=>{
-    console.log("196 server!!");
+app.listen(port,()=>{
+    console.log(`${port} success`);
 })
