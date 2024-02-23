@@ -4,7 +4,6 @@ app.use(express.json())
 let port=129
 
 let local=require("node-localstorage").LocalStorage
-// //console.log(local);
 // let st=local.LocalStorage
 // //console.log(st);
 let storage=new local("data")
